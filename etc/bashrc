@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# include the default BASH settings
+if [ -f "${HOME}/.bashrc" ]; then
+    # Linux
+    source "${HOME}/.bashrc"
+elif [ -f "${HOME}/.bash_profile" ]; then
+    # MacOS
+    source "${HOME}/.bash_profile"
+else
+    echo "Both ~/.bashrc AND ~/.bash_profile are missing, please check your installation"
+fi
+
+# options
+shopt -s histappend
+
+# prepare BASH environment
+export HISTCONTROL="ignoredups"
+export HISTFILE="${HOME}/.llamacpp"
+export HISTSIZE=4096
+export HISTFILESIZE=4096
+
+# prepare BASH environment
+export PROMPT_COMMAND='history -a'
+
+# modify the prompt
+export PS1="[LLAMACPP] ${PS1}"
