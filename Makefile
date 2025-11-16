@@ -4,10 +4,10 @@ ROOT  := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 CONDA_ENV_NAME = llamacpp
 
 # -----------------------------------------------------------------------------
-# notebook
+# default
 # -----------------------------------------------------------------------------
 
-.DEFAULT_GOAL = run
+.DEFAULT_GOAL = shell
 
 # -----------------------------------------------------------------------------
 # conda environment
@@ -20,6 +20,10 @@ env-init:
 		nvidia::cuda-toolkit=12.6.3 \
 		conda-forge::cudnn=9.3.0.75 \
 		conda-forge::cmake=4.1.2 \
+		conda-forge::gcc=12.4.0 \
+		conda-forge::libgcc-ng=15.2.0 \
+		conda-forge::libgcc=15.2.0 \
+		conda-forge::libstdcxx-ng=15.2.0 \
 		conda-forge::poetry=2.2.1
 
 .PHONY: env-create
@@ -55,11 +59,17 @@ env-info:
 # run
 # -----------------------------------------------------------------------------
 
-.PHONY: run
-run: export PATH="$(ROOT)/llamacpp/build/bin:${PATH}"
-run:
+.PHONY: shell
+shell: export PATH := $(ROOT)/llamacpp/build/bin:$(PATH)
+shell:
 	@conda run --no-capture-output --live-stream --name "$(CONDA_ENV_NAME)" --cwd "$(ROOT)/llamacpp/build/bin" \
-		bash
+		 bash --rcfile "$(ROOT)/etc/bashrc"
+
+.PHONY: server
+server: export PATH := $(ROOT)/llamacpp/build/bin:$(PATH)
+server:
+	@conda run --no-capture-output --live-stream --name "$(CONDA_ENV_NAME)" --cwd "$(ROOT)/llamacpp/build/bin" \
+		llama-server -hf ggml-org/gemma-3-1b-it-GGUF
 
 # -----------------------------------------------------------------------------
 # build
@@ -79,12 +89,20 @@ build-configure:
 		cmake .. -DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=89
 
 .PHONY: build-release
+build-release: export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
 build-release:
 	@conda run --no-capture-output --live-stream --name "$(CONDA_ENV_NAME)" --cwd "$(ROOT)/llamacpp/build" \
-		cmake --build . --config Release -j 1
+		cmake --build . --config Release -j 8
 
 .PHONY: build
 build: build-clean build-init build-configure build-release
+
+# -----------------------------------------------------------------------------
+# clean
+# -----------------------------------------------------------------------------
+
+.PHONY: wipe
+wipe: build-clean env-remove
 
 # -----------------------------------------------------------------------------
 # nvidia tools
