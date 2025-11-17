@@ -19,7 +19,7 @@ env-init:
 		conda-forge::python=3.12.12 \
 		conda-forge::poetry=2.2.1 \
 		conda-forge::cmake=4.1.2 \
-		conda-forge::gcc=12.4.0 \
+		conda-forge::gcc=13.4.0 \
 		conda-forge::libgcc-ng=15.2.0 \
 		conda-forge::libgcc=15.2.0 \
 		conda-forge::libstdcxx-ng=15.2.0 \
