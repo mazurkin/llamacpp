@@ -8,6 +8,9 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "3.12.12"
 
+[tool.poetry.group.huggingface.dependencies]
+huggingface-hub = "1.1.4"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
