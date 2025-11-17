@@ -13,7 +13,8 @@ install [conda](https://www.anaconda.com/docs/getting-started/miniconda/install)
 ```shell
 # install the conda environment with CUDA, cmake and all the dependencies
 $ make env-init
-$ make env-create
+$ make env-poetry
+$ make env-requirements
 ```
 
 ## build

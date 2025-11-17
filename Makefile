@@ -18,18 +18,23 @@ env-init:
 	@conda create --yes --copy --name "$(CONDA_ENV_NAME)" \
 		conda-forge::python=3.12.12 \
 		conda-forge::poetry=2.2.1 \
-		conda-forge::cudnn=9.3.0.75 \
 		conda-forge::cmake=4.1.2 \
 		conda-forge::gcc=12.4.0 \
 		conda-forge::libgcc-ng=15.2.0 \
 		conda-forge::libgcc=15.2.0 \
 		conda-forge::libstdcxx-ng=15.2.0 \
+		conda-forge::cudnn=9.7.1.26 \
 		nvidia::cuda-toolkit=12.6.3
 
-.PHONY: env-create
-env-create:
+.PHONY: env-poetry
+env-poetry:
 	@conda run --no-capture-output --live-stream --name "$(CONDA_ENV_NAME)" \
 		poetry install --no-root --no-directory
+
+.PHONY: env-requirements
+env-requirements:
+	@conda run --no-capture-output --live-stream --name "$(CONDA_ENV_NAME)" --cwd "$(ROOT)/llamacpp" \
+		pip install -r requirements.txt
 
 .PHONY: env-update
 env-update:
@@ -92,7 +97,7 @@ build-configure:
 build-release: export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
 build-release:
 	@conda run --no-capture-output --live-stream --name "$(CONDA_ENV_NAME)" --cwd "$(ROOT)/llamacpp/build" \
-		cmake --build . --config Release -j 8
+		cmake --build . --config Release -j 4
 
 .PHONY: build
 build: build-clean build-init build-configure build-release
