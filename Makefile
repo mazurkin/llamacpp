@@ -91,10 +91,16 @@ build-init:
 .PHONY: build-configure
 build-configure:
 	@conda run --no-capture-output --live-stream --name "$(CONDA_ENV_NAME)" --cwd "$(ROOT)/llamacpp/build" \
-		cmake .. -DGGML_CUDA=ON -DCMAKE_CUDA_ARCHITECTURES=89
+		cmake .. \
+			-DGGML_CUDA=ON \
+			-DCMAKE_CUDA_ARCHITECTURES=89 \
+			-DCMAKE_CXX_ABI_COMPILED=FALSE \
+			-DCMAKE_C_ABI_COMPILED=FALSE \
+			-DCMAKE_CUDA_ABI_COMPILED=FALSE \
+			-DGGML_CCACHE=OFF \
+			-DCMAKE_INSTALL_LIBDIR=
 
 .PHONY: build-release
-build-release: export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
 build-release:
 	@conda run --no-capture-output --live-stream --name "$(CONDA_ENV_NAME)" --cwd "$(ROOT)/llamacpp/build" \
 		cmake --build . --config Release -j 4
