@@ -47,17 +47,19 @@ $ llama-server -hf ggml-org/gemma-3-1b-it-GGUF
 ## GGUF
 
 ```shell
-# Convert to GGUF (F16 - full precision)
-bin/convert_hf_to_gguf.sh \
-    target/model \
-    --outfile target/model.gguf \
+# convert to GGUF (F16 - full precision)
+llamacpp/convert_hf_to_gguf.sh \
+    path-to-the-hf-model \
+    --outfile model-f16.gguf \
     --outtype f16
+```
 
-# Or quantize to smaller size (Q4_K_M is good balance)
-bin/convert_hf_to_gguf.sh \
-    target/model \
-    --outfile target/model-q4.gguf \
-    --outtype q4_k_m
+```shell
+# quantize the model
+llamacpp/build/bin/llama-quantize \
+    model-f16.gguf \
+    model-q4_k_m.gguf \
+    Q4_K_M
 ```
 
 ```text
@@ -70,15 +72,14 @@ Q4_0	~4 GB	        Acceptable	Fastest
 ```
 
 ```shell
-llama.cpp/llama-cli \
-    -m target/model-q4.gguf \
-    -p "Question: How Are You?\nAnswer:" \
+llamacpp/build/bin/llama-cli \
+    -m model-q4_k_m.gguf \
     -n 256 \
     --temp 0.7 \
     --repeat-penalty 1.1
 
-llama.cpp/llama-server \
-    -m target/model-q4.gguf \
+llamacpp/build/bin/llama-server \
+    -m model-q4_k_m.gguf  \
     --host 0.0.0.0 \
     --port 8080
 ```
