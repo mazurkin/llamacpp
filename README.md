@@ -10,7 +10,9 @@ install [conda](https://www.anaconda.com/docs/getting-started/miniconda/install)
 
 ## clone
 
-git clone --recurse-submodules git@github.com:mazurkin/llamacpp.git
+```shell
+$ git clone --recurse-submodules git@github.com:mazurkin/llamacpp.git
+```
 
 ## prepare
 
