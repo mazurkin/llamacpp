@@ -50,7 +50,7 @@ $ llama-server -hf ggml-org/gemma-3-1b-it-GGUF
 
 ```shell
 # convert to GGUF (F16 - full precision)
-llamacpp/convert_hf_to_gguf.sh \
+bin/convert_hf_to_gguf.sh \
     path-to-the-hf-model \
     --outfile model-f16.gguf \
     --outtype f16
