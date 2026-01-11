@@ -27,21 +27,18 @@ $ make env-requirements
 
 ```shell
 # check nvidia capabilities (mine is 8.9)
-# replace `-DCMAKE_CUDA_ARCHITECTURES=89` in the Makefile with your version if required
 $ make nvidia-cap
 ```
 
 ```shell
 # build llama.cpp executables in `llamacpp/build/bin`
-$ make build
+# replace nvidia capabilities with your own (remove the dot in the middle)
+$ CUDA_ARCHITECTURE=89 make build
 ```
 
 ## run
 
 ```shell
-# run BASH shell in the output folder
-$ make shell
-
 # run llama-server
 $ llama-server -hf ggml-org/gemma-3-1b-it-GGUF
 ```
@@ -64,14 +61,13 @@ llamacpp/build/bin/llama-quantize \
     Q4_K_M
 ```
 
-```text
-Type	Size (8B model)	Quality	    Speed
-F16	    ~16 GB	        Best	    Slowest
-Q8_0	~8 GB	        Excellent	Fast
-Q5_K_M	~5.5 GB	        Very Good	Faster
-Q4_K_M	~4.5 GB	        Good	    Fast
-Q4_0	~4 GB	        Acceptable	Fastest
-```
+| Type   | Size (8B model) | Quality    | Speed   |
+|--------|----------------:|------------|---------|
+| F16    |     	    ~16 GB | Best       | Slowest |
+| Q8_0   |           ~8 GB | Excellent  | Fast    |
+| Q5_K_M |         ~5.5 GB | Very Good  | Faster  |
+| Q4_K_M |         ~4.5 GB | Good       | Fast    |
+| Q4_0   |           ~4 GB | Acceptable | Fastest |
 
 ```shell
 llamacpp/build/bin/llama-cli \

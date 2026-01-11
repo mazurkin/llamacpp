@@ -3,6 +3,8 @@ ROOT  := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
 CONDA_ENV_NAME = llamacpp
 
+CUDA_ARCHITECTURE ?= 89
+
 # -----------------------------------------------------------------------------
 # default
 # -----------------------------------------------------------------------------
@@ -93,7 +95,7 @@ build-configure:
 	@conda run --no-capture-output --live-stream --name "$(CONDA_ENV_NAME)" --cwd "$(ROOT)/llamacpp/build" \
 		cmake .. \
 			-DGGML_CUDA=ON \
-			-DCMAKE_CUDA_ARCHITECTURES=89 \
+			-DCMAKE_CUDA_ARCHITECTURES=$(CUDA_ARCHITECTURE) \
 			-DCMAKE_CXX_ABI_COMPILED=FALSE \
 			-DCMAKE_C_ABI_COMPILED=FALSE \
 			-DCMAKE_CUDA_ABI_COMPILED=FALSE \
