@@ -25,8 +25,8 @@ env-init:
 		conda-forge::libgcc-ng=15.2.0 \
 		conda-forge::libgcc=15.2.0 \
 		conda-forge::libstdcxx-ng=15.2.0 \
-		conda-forge::cudnn=9.7.1.26 \
-		nvidia::cuda-toolkit=12.6.3
+		nvidia::cudnn==9.21.1.3 \
+		nvidia::cuda-toolkit=13.0.3
 
 .PHONY: env-poetry
 env-poetry:
@@ -70,7 +70,7 @@ env-info:
 shell: export PATH := $(ROOT)/llamacpp/build/bin:$(PATH)
 shell:
 	@conda run --no-capture-output --live-stream --name "$(CONDA_ENV_NAME)" --cwd "$(ROOT)/llamacpp/build/bin" \
-		 bash --rcfile "$(ROOT)/etc/bashrc"
+		bash --rcfile "$(ROOT)/etc/bashrc"
 
 .PHONY: server
 server: export PATH := $(ROOT)/llamacpp/build/bin:$(PATH)
@@ -105,7 +105,7 @@ build-configure:
 .PHONY: build-release
 build-release:
 	@conda run --no-capture-output --live-stream --name "$(CONDA_ENV_NAME)" --cwd "$(ROOT)/llamacpp/build" \
-		cmake --build . --config Release -j 4
+		cmake --build . --config Release -j 8
 
 .PHONY: build
 build: build-clean build-init build-configure build-release
