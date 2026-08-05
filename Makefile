@@ -25,7 +25,7 @@ env-init:
 		conda-forge::libgcc-ng=15.2.0 \
 		conda-forge::libgcc=15.2.0 \
 		conda-forge::libstdcxx-ng=15.2.0 \
-		nvidia::cudnn==9.21.1.3 \
+		conda-forge::cudnn==9.21.1.3 \
 		nvidia::cuda-toolkit=13.0.3
 
 .PHONY: env-poetry
