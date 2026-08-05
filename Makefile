@@ -3,7 +3,7 @@ ROOT  := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
 CONDA_ENV_NAME = llamacpp
 
-CUDA_ARCHITECTURE ?= 89
+CUDA_ARCHITECTURE ?= 80
 
 # -----------------------------------------------------------------------------
 # default
@@ -25,8 +25,8 @@ env-init:
 		conda-forge::libgcc-ng=15.2.0 \
 		conda-forge::libgcc=15.2.0 \
 		conda-forge::libstdcxx-ng=15.2.0 \
-		conda-forge::cudnn==9.21.1.3 \
-		nvidia::cuda-toolkit=13.0.3
+		nvidia::cudnn==9.23.1.3 \
+		nvidia::cuda-toolkit=13.3.1
 
 .PHONY: env-poetry
 env-poetry:
