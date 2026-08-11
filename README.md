@@ -18,8 +18,8 @@ $ git clone --recurse-submodules git@github.com:mazurkin/llamacpp.git
 
 ```shell
 # install the conda environment with CUDA, cmake and all the dependencies
-$ make env-init
-$ make env-poetry
+$ make env-create
+$ make env-poetry-install
 $ make env-requirements
 ```
 

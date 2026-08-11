@@ -15,8 +15,8 @@ CUDA_ARCHITECTURE ?= 80
 # conda environment
 # -----------------------------------------------------------------------------
 
-.PHONY: env-init
-env-init:
+.PHONY: env-create
+env-create:
 	@conda create --yes --copy --name "$(CONDA_ENV_NAME)" \
 		conda-forge::python=3.12.12 \
 		conda-forge::poetry=2.2.1 \
@@ -28,25 +28,29 @@ env-init:
 		nvidia::cudnn==9.23.1.3 \
 		nvidia::cuda-toolkit=13.3.1
 
-.PHONY: env-poetry
-env-poetry:
+.PHONY: env-poetry-install
+env-poetry-install:
 	@conda run --no-capture-output --live-stream --name "$(CONDA_ENV_NAME)" \
 		poetry install --no-root --no-directory
+
+.PHONY: env-poetry-update
+env-poetry-update:
+	@conda run --no-capture-output --live-stream --name "$(CONDA_ENV_NAME)" \
+		poetry update
+
+.PHONY: env-poetry-show
+env-poetry-show:
+	@bin/run poetry show --tree
+
+.PHONY: env-poetry-lock
+env-poetry-lock:
+	@conda run --no-capture-output --live-stream --name "$(CONDA_ENV_NAME)" \
+		poetry lock --no-update
 
 .PHONY: env-requirements
 env-requirements:
 	@conda run --no-capture-output --live-stream --name "$(CONDA_ENV_NAME)" --cwd "$(ROOT)/llamacpp" \
 		pip install -r requirements.txt
-
-.PHONY: env-update
-env-update:
-	@conda run --no-capture-output --live-stream --name "$(CONDA_ENV_NAME)" \
-		poetry update
-
-.PHONY: env-list
-env-list:
-	@conda run --no-capture-output --live-stream --name "$(CONDA_ENV_NAME)" \
-		poetry show
 
 .PHONY: env-remove
 env-remove:

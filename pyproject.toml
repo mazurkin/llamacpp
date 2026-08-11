@@ -9,7 +9,9 @@ readme = "README.md"
 python = "3.12.12"
 
 [tool.poetry.group.huggingface.dependencies]
-huggingface-hub = "0.36.0"
+huggingface_hub = {version="1.27.0", extras=["cli"]}
+transformers = {version="5.13.1", extras=["torch"]}
+datasets = "5.0.1"
 
 [tool.poetry.group.llm.dependencies]
 sentencepiece = "0.2.1"
