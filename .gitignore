@@ -3,5 +3,7 @@
 /*.ipr
 /*.iws
 
+/*.log
+
 .ipynb_checkpoints
 __pycache__

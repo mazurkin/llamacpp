@@ -108,12 +108,14 @@ build-configure:
 			-DCMAKE_C_ABI_COMPILED=FALSE \
 			-DCMAKE_CUDA_ABI_COMPILED=FALSE \
 			-DGGML_CCACHE=OFF \
-			-DCMAKE_INSTALL_LIBDIR=
+			-DCMAKE_INSTALL_LIBDIR= \
+	| tee "$(ROOT)/build-configure.log"
 
 .PHONY: build-release
 build-release:
 	@conda run --no-capture-output --live-stream --name "$(CONDA_ENV_NAME)" --cwd "$(ROOT)/llamacpp/build" \
-		cmake --build . --config Release -j 8
+		cmake --build . --config Release -j 8 \
+	| tee "$(ROOT)/build-release.log"
 
 .PHONY: build
 build: build-clean build-init build-configure build-release
