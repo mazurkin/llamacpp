@@ -100,7 +100,6 @@ build-configure:
 	@conda run --no-capture-output --live-stream --name "$(CONDA_ENV_NAME)" --cwd "$(ROOT)/llamacpp/build" \
 		cmake .. \
 			-DGGML_CUDA=ON \
-			-DLLAMA_CURL=ON \
 			-DLLAMA_BUILD_EXAMPLES=ON \
 			-DLLAMA_BUILD_SERVER=ON \
 			-DLLAMA_BUILD_UI=ON \
