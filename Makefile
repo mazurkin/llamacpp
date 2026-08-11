@@ -25,6 +25,7 @@ env-create:
 		conda-forge::libgcc-ng=15.2.0 \
 		conda-forge::libgcc=15.2.0 \
 		conda-forge::libstdcxx-ng=15.2.0 \
+		conda-forge::libcurl=8.21.0 \
 		nvidia::cudnn==9.23.1.3 \
 		nvidia::cuda-toolkit=13.3.1
 
@@ -100,6 +101,9 @@ build-configure:
 		cmake .. \
 			-DGGML_CUDA=ON \
 			-DLLAMA_CURL=ON \
+			-DLLAMA_BUILD_EXAMPLES=ON \
+			-DLLAMA_BUILD_SERVER=ON \
+			-DLLAMA_BUILD_UI=ON \
 			-DCMAKE_CUDA_ARCHITECTURES=$(CUDA_ARCHITECTURE) \
 			-DCMAKE_CXX_ABI_COMPILED=FALSE \
 			-DCMAKE_C_ABI_COMPILED=FALSE \
